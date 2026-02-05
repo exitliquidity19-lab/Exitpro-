@@ -1,80 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ExitPro - Powered by Jupiter on Solana</title>
-  <script src="https://terminal.jup.ag/main-v4.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExitPro - Jupiter Swap Terminal</title>
+  <script src="https://terminal.jup.ag/main.js"></script> <!-- fallback versi stabil -->
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0a0e17;
-      color: #e6e6e6;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-    }
-    header {
-      text-align: center;
-      padding: 20px 0;
-      background: linear-gradient(90deg, #00d1b2, #7c3aed);
-      width: 100%;
-      color: white;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    }
-    .title {
-      font-size: 2.8em;
-      margin: 0;
-      font-weight: bold;
-    }
-    .subtitle {
-      font-size: 1.3em;
-      opacity: 0.9;
-      margin: 8px 0 0;
-    }
-    #integrated-terminal {
-      width: 90%;
-      max-width: 420px;
-      height: 75vh;
-      min-height: 550px;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 15px 50px rgba(0, 209, 178, 0.3);
-      margin: 30px auto;
-      background: #111827;
-    }
-    footer {
-      margin-top: auto;
-      padding: 15px;
-      font-size: 0.9em;
-      opacity: 0.7;
-      text-align: center;
-    }
+    body { margin: 0; background: #0a0e17; color: white; font-family: Arial; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    header { text-align: center; padding: 20px; background: linear-gradient(90deg, #00d1b2, #7c3aed); width: 100%; }
+    #integrated-terminal { width: 90%; max-width: 400px; height: 600px; border: 1px solid #444; border-radius: 12px; overflow: hidden; background: #111; margin: 20px; }
   </style>
 </head>
 <body>
   <header>
-    <h1 class="title">ExitPro</h1>
-    <p class="subtitle">Seamless Solana Swaps • Powered by Jupiter • Earn Referral Fees</p>
+    <h1>ExitPro</h1>
+    <p>Powered by Jupiter • Referral Active</p>
   </header>
-  
   <div id="integrated-terminal"></div>
 
-  <footer>
-    Built in Bandung • Referral 0.5% • DYOR & Trade Safe 🚀
-  </footer>
-
   <script>
-    window.Jupiter.init({
-      displayMode: "integrated",
-      integratedTargetId: "integrated-terminal",
-      referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH",
-      referralFeeBps: 50
-    });
+    if (window.Jupiter) {
+      window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "integrated-terminal",
+        referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH",
+        referralFeeBps: 50
+      });
+      console.log("Jupiter loaded successfully!");
+    } else {
+      document.body.innerHTML += '<p style="color:red; text-align:center;">Jupiter script gagal load. Cek console (F12) atau refresh.</p>';
+      console.error("Jupiter not loaded – check script src or network.");
+    }
   </script>
 </body>
 </html>
