@@ -4,49 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ExitPro - Powered by Jupiter on Solana</title>
-  <!-- Script Jupiter Plugin v4 (lite embed swap UI dengan logo Jupiter, token selector, route visual, dll) -->
   <script src="https://terminal.jup.ag/main-v4.js"></script>
   <style>
-    body { 
-      margin: 0; 
-      padding: 0; 
-      background: #0a0e17; /* Dark cyberpunk/Solana vibe */
-      color: #e6e6e6; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      height: 100vh; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a0e17;
+      color: #e6e6e6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       overflow: hidden;
     }
-    header { 
-      text-align: center; 
-      padding: 20px 0; 
-      background: linear-gradient(90deg, #00d1b2, #7c3aed); /* Jupiter teal-purple gradient */
-      width: 100%; 
-      color: white; 
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    header {
+      text-align: center;
+      padding: 20px 0;
+      background: linear-gradient(90deg, #00d1b2, #7c3aed);
+      width: 100%;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
     }
-    .title { 
-      font-size: 2.8em; 
-      margin: 0; 
-      font-weight: bold; 
+    .title {
+      font-size: 2.8em;
+      margin: 0;
+      font-weight: bold;
     }
-    .subtitle { 
-      font-size: 1.3em; 
-      opacity: 0.9; 
-      margin: 8px 0 0; 
+    .subtitle {
+      font-size: 1.3em;
+      opacity: 0.9;
+      margin: 8px 0 0;
     }
-    #integrated-terminal { 
-      width: 90%; 
-      max-width: 420px; /* Pas buat mobile & desktop */
-      height: 75vh; 
-      min-height: 550px; 
-      border-radius: 20px; 
-      overflow: hidden; 
-      box-shadow: 0 15px 50px rgba(0, 209, 178, 0.3); /* Neon glow */
-      margin: 30px auto; 
-      background: #111827; /* Loading fallback */
+    #integrated-terminal {
+      width: 90%;
+      max-width: 420px;
+      height: 75vh;
+      min-height: 550px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 50px rgba(0, 209, 178, 0.3);
+      margin: 30px auto;
+      background: #111827;
     }
     footer {
       margin-top: auto;
@@ -60,28 +59,21 @@
 <body>
   <header>
     <h1 class="title">ExitPro</h1>
-    <p class="subtitle">Seamless Solana Swaps • Powered by Jupiter Aggregator • Earn Referral Fees</p>
+    <p class="subtitle">Seamless Solana Swaps • Powered by Jupiter • Earn Referral Fees</p>
   </header>
   
-  <!-- Ini div tempat Jupiter render UI swap full (keliatan logo Jupiter, dll) -->
   <div id="integrated-terminal"></div>
 
   <footer>
-    Built in Bandung • Referral Enabled (0.5%) • DYOR & Trade Safe 🚀
+    Built in Bandung • Referral 0.5% • DYOR & Trade Safe 🚀
   </footer>
 
   <script>
-    // Init Jupiter Plugin embedded mode
     window.Jupiter.init({
       displayMode: "integrated",
       integratedTargetId: "integrated-terminal",
-      // Referral pubkey kamu (fee masuk ke sini dari setiap swap via site)
       referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH",
-      referralFeeBps: 50,  // 0.5% – ubah kalau mau lebih (max policy Jupiter)
-      
-      // Opsional: Default token pair SOL → USDC
-      // initialInputMint: "So11111111111111111111111111111111111111112",
-      // initialOutputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+      referralFeeBps: 50
     });
   </script>
 </body>
