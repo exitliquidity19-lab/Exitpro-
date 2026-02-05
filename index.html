@@ -4,53 +4,94 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ExitPro - Institutional Terminal</title>
-  <script src="https://terminal.jup.ag/main.js"></script> <!-- Stabil -->
+  <script src="https://terminal.jup.ag/main.js"></script>
   <style>
-    body { margin: 0; background: #000; color: #0f0; font-family: 'Courier New', monospace; height: 100vh; overflow: hidden; display: grid; grid-template-rows: 60px 1fr 200px; grid-template-columns: 250px 1fr 300px; gap: 10px; padding: 10px; box-sizing: border-box; }
-    header { grid-column: 1 / -1; background: linear-gradient(90deg, #00ff9d, #ff00ff); color: #000; text-align: center; padding: 10px; font-weight: bold; text-shadow: 0 0 10px #0f0; border-radius: 8px; }
-    .sidebar { background: #111; border: 1px solid #0f0; border-radius: 8px; padding: 10px; overflow-y: auto; box-shadow: 0 0 15px #0f0; }
-    .main { background: #111; border: 1px solid #0f0; border-radius: 8px; padding: 10px; overflow: hidden; box-shadow: 0 0 20px #0f0; }
-    .swap-container { height: 100%; }
-    .history { grid-column: 1 / -1; background: #111; border: 1px solid #0f0; border-radius: 8px; padding: 10px; overflow-y: auto; box-shadow: 0 0 15px #0f0; }
+    body { 
+      margin: 0; 
+      background: #000; 
+      color: #00ff9d; /* Neon green text */
+      font-family: 'Courier New', monospace; 
+      height: 100vh; 
+      overflow: hidden; 
+      display: grid; 
+      grid-template-rows: 60px 1fr 250px; 
+      grid-template-columns: 280px 1fr 380px; 
+      gap: 10px; 
+      padding: 10px; 
+      box-sizing: border-box; 
+    }
+    header { 
+      grid-column: 1 / -1; 
+      background: linear-gradient(90deg, #000, #00ff9d, #000); 
+      color: #000; 
+      text-align: center; 
+      padding: 10px; 
+      font-weight: bold; 
+      text-shadow: 0 0 10px #00ff9d; 
+      border-radius: 8px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+    }
+    .logo { font-size: 2em; color: #00ff9d; }
+    .status { font-size: 1em; color: #00ff9d; }
+    .connect-btn { background: #ff0044; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; box-shadow: 0 0 10px #ff0044; }
+    .sidebar { background: #0d1117; border: 1px solid #00ff9d; border-radius: 8px; padding: 10px; overflow-y: auto; box-shadow: 0 0 15px #00ff9d33; }
+    .main-chart { background: #0d1117; border: 1px solid #00ff9d; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px #00ff9d33; }
+    .swap-pane { background: #0d1117; border: 1px solid #00ff9d; border-radius: 8px; padding: 10px; box-shadow: 0 0 15px #00ff9d33; }
+    .history { grid-column: 1 / -1; background: #0d1117; border: 1px solid #00ff9d; border-radius: 8px; padding: 10px; overflow-y: auto; box-shadow: 0 0 15px #00ff9d33; }
     #integrated-terminal { height: 100%; }
     iframe { width: 100%; height: 100%; border: none; }
-    .watchlist { list-style: none; padding: 0; }
-    .watchlist li { padding: 5px; border-bottom: 1px solid #0f0; color: #0f0; }
-    .watchlist li span { color: #ff0; }
+    .watchlist h3 { color: #00ff9d; margin-top: 0; }
+    .watchlist ul { list-style: none; padding: 0; }
+    .watchlist li { padding: 8px; border-bottom: 1px solid #00ff9d33; color: #00ff9d; }
+    .watchlist li span { color: #ff0044; font-weight: bold; }
+    .one-click-btn { 
+      background: linear-gradient(90deg, #ff0044, #ff6600); 
+      color: white; 
+      border: none; 
+      padding: 12px 24px; 
+      font-size: 1.2em; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      box-shadow: 0 0 20px #ff0044; 
+      margin-top: 10px; 
+      width: 100%; 
+      font-weight: bold; 
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>EXIT PRO TERMINAL</h1>
-    <p>Solana Mainnet • Referral 0.5% Active • Institutional Grade</p>
+    <div class="logo">EXIT PRO</div>
+    <div class="status">Solana Mainnet • Referral Active 0.5%</div>
+    <button class="connect-btn">Connect Wallet</button>
   </header>
 
   <div class="sidebar">
-    <h3>Watchlist</h3>
+    <h3>Watchlist / Trending</h3>
     <ul class="watchlist">
       <li><span>TALEM MEME</span> +1.3M (+13%)</li>
-      <li><span>MAIORS</span> +43K (+8%)</li>
       <li><span>PAULK</span> +1.3M (+5%)</li>
-      <!-- Tambah lebih banyak manual atau JS fetch nanti -->
+      <li><span>MAIORS</span> +43K (+8%)</li>
+      <li><span>RAITSANS</span> +18.5M (+12%)</li>
+      <!-- Tambah manual atau JS fetch trending nanti -->
     </ul>
-    <h3>AI Market Sentiment</h3>
-    <p>Bullish on meme coins • High volume • Watch for pumps</p>
   </div>
 
-  <div class="main">
-    <h3>Trading Center - Live Chart (SOL)</h3>
-    <!-- Birdeye TV widget dark theme candle SOL -->
+  <div class="main-chart">
+    <h3>Live Chart (SOL/USDC)</h3>
     <iframe src="https://birdeye.so/tv-widget/So11111111111111111111111111111111111111112?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia/Jakarta&theme=dark" frameborder="0" allowfullscreen></iframe>
   </div>
 
-  <div class="swap-container">
+  <div class="swap-pane">
     <h3>Swap Terminal</h3>
     <div id="integrated-terminal"></div>
+    <button class="one-click-btn">ONE-CLICK SWAP / EXIT</button> <!-- Mirip Ave.ai one-click vibe -->
   </div>
 
   <div class="history">
     <h3>Recent Transactions / Live Trades</h3>
-    <!-- Solscan tx history for SOL token (recent trades) -->
     <iframe src="https://solscan.io/token/So11111111111111111111111111111111111111112#txs" frameborder="0" allowfullscreen></iframe>
   </div>
 
@@ -59,14 +100,10 @@
       window.Jupiter.init({
         displayMode: "integrated",
         integratedTargetId: "integrated-terminal",
-        endpoint: "https://api.mainnet-beta.solana.com", // Public RPC
+        endpoint: "https://api.mainnet-beta.solana.com", // Ganti ke Helius kalau rate limit
         referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH",
-        referralFeeBps: 50,
-        formProps: { fixedOutputMint: false }
+        referralFeeBps: 50
       });
-      console.log("Full Terminal Loaded – Referral Active");
-    } else {
-      console.error("Jupiter failed to load");
     }
   </script>
 </body>
