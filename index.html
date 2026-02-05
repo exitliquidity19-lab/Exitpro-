@@ -1,378 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EXIT PRO | Terminal</title>
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/exitliquidity19-lab/Exitpro-/main/exit-coin.png"/>
   <script src="https://terminal.jup.ag/main.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --neon-green: #00ff9d;
-      --exit-red: #ff0044;
-      --bg-dark: #05070a;
-      --panel-bg: rgba(13, 17, 23, 0.8);
-      --border-color: rgba(0, 255, 157, 0.2);
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: var(--bg-dark);
-      background-image: radial-gradient(circle at center, #00ff9d05 0%, transparent 100%);
-      color: #fff;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #080a0c;
+      color: #e6e8ea;
+      font-family: 'JetBrains Mono', monospace;
       height: 100vh;
-      display: grid;
-      grid-template-rows: 60px 1fr 250px;
-      grid-template-columns: 300px 1fr 400px;
-      gap: 8px;
-      padding: 8px;
-      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
-    /* Header Styling */
+    /* HEADER - CLEAN & PRO */
     header {
-      grid-column: 1 / -1;
-      background: var(--panel-bg);
-      border: 1px solid var(--border-color);
+      height: 50px;
+      background: #0f1216;
+      border-bottom: 1px solid #1c2128;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
+      padding: 0 15px;
     }
 
-    .logo-container { display: flex; align-items: center; gap: 10px; }
-    .logo-text { 
-        font-size: 1.5rem; 
-        font-weight: 800; 
-        letter-spacing: 2px;
-        background: linear-gradient(90deg, #fff, var(--neon-green));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand img { height: 24px; }
+    .brand span { font-weight: bold; font-size: 1.1rem; color: #00ff9d; letter-spacing: -1px; }
+
+    /* LAYOUT UTAMA */
+    main {
+      display: flex;
+      flex: 1;
+      gap: 2px; /* Jarak tipis ala dashboard beneran */
+      padding: 2px;
     }
 
-    .header-stats { display: flex; gap: 20px; font-size: 0.85rem; color: #888; }
-    .stat-item span { color: var(--neon-green); font-family: monospace; }
-
-    /* Layout Components */
+    /* PANEL SYSTEM */
     .panel {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      overflow: hidden;
+      background: #0f1216;
       display: flex;
       flex-direction: column;
+      border: 1px solid #1c2128;
     }
 
     .panel-header {
-      padding: 10px 15px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid var(--border-color);
-      font-size: 0.8rem;
-      font-weight: bold;
+      background: #161b22;
+      padding: 6px 12px;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      display: flex;
-      justify-content: space-between;
-      color: var(--neon-green);
+      color: #8b949e;
+      border-bottom: 1px solid #1c2128;
     }
 
-    /* Sidebar/Watchlist */
-    .watchlist-item {
+    /* KIRI: WATCHLIST */
+    .sidebar { width: 260px; }
+    .list-item {
+      padding: 10px;
+      border-bottom: 1px solid #1c2128;
       display: flex;
       justify-content: space-between;
-      padding: 12px 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.9rem;
-      transition: background 0.2s;
+      font-size: 0.8rem;
     }
-    .watchlist-item:hover { background: rgba(0, 255, 157, 0.05); cursor: pointer; }
 
-    /* Chart Area */
-    .main-chart { position: relative; }
+    /* TENGAH: CHART & HISTORY */
+    .content-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .chart-box { flex: 2; }
+    .history-box { flex: 1; }
+
+    /* KANAN: SWAP */
+    .terminal-box { width: 380px; }
+
     iframe { width: 100%; height: 100%; border: none; }
 
-    /* Swap Area */
-    .swap-container { padding: 10px; flex-grow: 1; }
-    
-    .one-click-btn {
-      background: linear-gradient(45deg, var(--exit-red), #ff6600);
-      color: white;
-      border: none;
-      padding: 15px;
-      margin: 10px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 900;
-      text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(255, 0, 68, 0.4);
-      transition: transform 0.1s;
-    }
-    .one-click-btn:active { transform: scale(0.98); }
-
-    /* Scrollbar */
+    /* SCROLLBAR CUSTOM */
     ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #30363d; }
 
-    /* Mobile Warning */
-    @media (max-width: 1024px) {
-      body { grid-template-columns: 1fr; grid-template-rows: auto; overflow: auto; height: auto; }
-      .sidebar, .history { display: none; }
+    @media (max-width: 1000px) {
+      .sidebar, .history-box { display: none; }
+      .terminal-box { width: 100%; }
+      main { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-container">
-      <img src="https://raw.githubusercontent.com/exitliquidity19-lab/Exitpro-/main/exit-coin.png" width="30" height="30" alt="logo">
-      <div class="logo-text">EXIT PRO</div>
+    <div class="brand">
+      <img src="https://raw.githubusercontent.com/exitliquidity19-lab/Exitpro-/main/exit-coin.png" alt="logo">
+      <span>EXIT PRO <small style="color:#555; font-size: 0.6rem;">v1.0</small></span>
     </div>
-    <div class="header-stats">
-      <div class="stat-item">SOL: <span id="sol-price">$---</span></div>
-      <div class="stat-item">GAS: <span>12000 per lambo</span></div>
-      <div class="stat-item">STATUS: <span style="color: var(--neon-green);">CONNECTED</span></div>
-    </div>
+    <div style="font-size: 0.75rem; color: #00ff9d;">● SOLANA MAINNET</div>
     <div id="jupiter-terminal-button"></div>
   </header>
 
-  <aside class="panel sidebar">
-    <div class="panel-header"><span>Market Watch</span><span>Change</span></div>
-    <div class="watchlist-item"><span>$SOL</span><span style="color:var(--neon-green)">+2.4%</span></div>
-    <div class="watchlist-item"><span>$EXIT</span><span style="color:var(--neon-green)">+69.0%</span></div>
-    <div class="watchlist-item"><span>$JUP</span><span style="color:var(--exit-red)">-1.2%</span></div>
-    <div class="watchlist-item"><span>$BONK</span><span style="color:var(--neon-green)">+0.5%</span></div>
-    <div style="padding: 20px; text-align: center; color: #444; font-size: 0.7rem;">More tokens coming soon...</div>
-  </aside>
+  <main>
+    <section class="panel sidebar">
+      <div class="panel-header">Market Watch</div>
+      <div class="list-item"><span>SOL/USDC</span><span style="color:#00ff9d">$145.20</span></div>
+      <div class="list-item"><span>EXIT/SOL</span><span style="color:#00ff9d">Live</span></div>
+      <div style="padding: 20px; color: #333; font-size: 0.7rem; text-align: center;">Data auto-sync active</div>
+    </section>
 
-  <main class="panel main-chart">
-    <div class="panel-header">EXIT/SOL Real-Time Chart</div>
-    <iframe src="https://birdeye.so/tv-widget/So11111111111111111111111111111111111111112?chain=solana&viewMode=pair&chartInterval=1m&chartType=CANDLE&theme=dark" frameborder="0"></iframe>
-  </main>
-
-  <section class="panel swap-pane">
-    <div class="panel-header">Trade Terminal</div>
-    <div id="integrated-terminal" class="swap-container"></div>
-    <button class="one-click-btn">EMERGENCY EXIT (SELL ALL)</button>
-  </section>
-
-  <footer class="panel history" style="grid-column: 1 / 3;">
-    <div class="panel-header">Recent Network Transactions</div>
-    <iframe src="https://solscan.io/txs" frameborder="0"></iframe>
-  </footer>
-
-  <div class="panel" style="grid-column: 3 / 4;">
-    <div class="panel-header">Token Info ($EXIT)</div>
-    <div style="padding: 15px; font-size: 0.85rem; line-height: 1.6;">
-        <p>Liquidity: <span style="color:var(--neon-green)">$250,000 Locked</span></p>
-        <p>Market Cap: <span style="color:var(--neon-green)">$1.2M</span></p>
-        <p>Holders: <span style="color:var(--neon-green)">4,2069</span></p>
-        <hr style="border: 0; border-top: 1px solid var(--border-color);">
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EXIT PRO | Terminal Trading</title>
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/exitliquidity19-lab/Exitpro-/main/exit-coin.png"/>
-  <script src="https://terminal.jup.ag/main.js"></script>
-  <style>
-    :root {
-      --neon-green: #00ff9d;
-      --neon-glow: rgba(0, 255, 157, 0.4);
-      --bg-black: #020406;
-      --panel-dark: #0a0d12;
-      --text-gray: #8b949e;
-      --border-thin: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg-black);
-      color: #fff;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Top Ticker Bar */
-    .ticker {
-      background: #000;
-      height: 30px;
-      border-bottom: var(--border-thin);
-      display: flex;
-      align-items: center;
-      font-size: 0.75rem;
-      font-family: monospace;
-      white-space: nowrap;
-      color: var(--neon-green);
-    }
-
-    /* Main Grid Layout */
-    .dashboard {
-      display: grid;
-      grid-template-columns: 280px 1fr 380px;
-      grid-template-rows: 60px 1fr 220px;
-      gap: 5px;
-      padding: 5px;
-      flex-grow: 1;
-      height: calc(100vh - 30px);
-    }
-
-    header {
-      grid-column: 1 / -1;
-      background: var(--panel-dark);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 15px;
-      border: var(--border-thin);
-      border-radius: 4px;
-    }
-
-    .panel {
-      background: var(--panel-dark);
-      border: var(--border-thin);
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    .panel-title {
-      background: rgba(255,255,255,0.03);
-      padding: 8px 12px;
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-gray);
-      border-bottom: var(--border-thin);
-    }
-
-    /* Chart & Terminal specific */
-    .main-chart { grid-row: 2 / 3; grid-column: 2 / 3; }
-    .swap-panel { grid-row: 2 / 4; grid-column: 3 / 4; }
-    .sidebar { grid-row: 2 / 4; grid-column: 1 / 2; }
-    .history-panel { grid-row: 3 / 4; grid-column: 2 / 3; }
-
-    iframe { width: 100%; height: 100%; border: none; }
-
-    /* Custom Button ala Ave.ai */
-    .btn-connect {
-      background: transparent;
-      border: 1px solid var(--neon-green);
-      color: var(--neon-green);
-      padding: 6px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
-    }
-    .btn-connect:hover {
-      background: var(--neon-green);
-      color: #000;
-      box-shadow: 0 0 15px var(--neon-glow);
-    }
-
-    .status-badge {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background: var(--neon-green);
-      border-radius: 50%;
-      margin-right: 5px;
-      box-shadow: 0 0 8px var(--neon-green);
-    }
-
-    /* Watchlist styling */
-    .list-item {
-      padding: 10px 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-    }
-    .price-up { color: var(--neon-green); }
-    .price-down { color: #ff4a4a; }
-
-    /* Hide Jupiter text on top */
-    #integrated-terminal { border-radius: 8px; overflow: hidden; height: 100%; }
-  </style>
-</head>
-<body>
-
-  <div class="ticker">
-    <marquee scrollamount="5">
-      $SOL: <span id="ticker-sol">...</span> • $EXIT: <span style="color:#fff">$0.00042</span> • TOTAL MARKET CAP: $128.4B • 24H VOL: $4.2B • GAS: 12 LAMPS • REFERRAL ACTIVE (0.5% REBATE)
-    </marquee>
-  </div>
-
-  <div class="dashboard">
-    <header>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <img src="https://raw.githubusercontent.com/exitliquidity19-lab/Exitpro-/main/exit-coin.png" height="32" />
-        <h2 style="margin:0; font-size: 1.2rem; letter-spacing: 2px;">EXIT<span style="color:var(--neon-green)">PRO</span></h2>
-      </div>
-      <div style="font-size: 0.8rem; color: var(--text-gray);">
-        <span class="status-badge"></span> SOLANA MAINNET
-      </div>
-      <div id="jupiter-terminal-button"></div>
-    </header>
-
-    <aside class="panel sidebar">
-      <div class="panel-title">Hot Pairs / Watchlist</div>
-      <div class="list-item"><span>SOL/USDC</span> <span class="price-up">+1.2%</span></div>
-      <div class="list-item"><span>EXIT/SOL</span> <span class="price-up">+420%</span></div>
-      <div class="list-item"><span>JUP/SOL</span> <span class="price-down">-0.5%</span></div>
-      <div class="list-item"><span>WIF/SOL</span> <span class="price-up">+5.7%</span></div>
-      <div style="margin-top: auto; padding: 15px; font-size: 0.7rem; color: #444;">
-        Powered by ExitLiquidity API
-      </div>
-    </aside>
-
-    <main class="panel main-chart">
-      <div class="panel-title">Real-Time Chart (TradingView)</div>
-      <iframe src="https://birdeye.so/tv-widget/So11111111111111111111111111111111111111112?chain=solana&viewMode=pair&chartInterval=1m&theme=dark" frameborder="0"></iframe>
-    </main>
-
-    <div class="panel history-panel">
-      <div class="panel-title">Live Transactions</div>
-      <iframe src="https://solscan.io/txs?cluster=mainnet" frameborder="0"></iframe>
+    <div class="content-center">
+      <section class="panel chart-box">
+        <div class="panel-header">Live Price Chart</div>
+        <iframe src="https://birdeye.so/tv-widget/So11111111111111111111111111111111111111112?chain=solana&viewMode=pair&chartInterval=1m&theme=dark"></iframe>
+      </section>
+      <section class="panel history-box">
+        <div class="panel-header">Recent Transactions</div>
+        <iframe src="https://solscan.io/txs"></iframe>
+      </section>
     </div>
 
-    <section class="panel swap-panel">
-      <div class="panel-title">Fast Swap Terminal</div>
-      <div id="integrated-terminal"></div>
+    <section class="panel terminal-box">
+      <div class="panel-header">Jupiter Swap Terminal</div>
+      <div id="integrated-terminal" style="flex:1;"></div>
     </section>
-  </div>
+  </main>
 
   <script>
-    // Inisialisasi Jupiter Terminal
     window.Jupiter.init({
       displayMode: "integrated",
       integratedTargetId: "integrated-terminal",
       endpoint: "https://api.mainnet-beta.solana.com",
-      referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH", // GANTI WALLET LU
+      referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH",
       referralFeeBps: 50,
       theme: 'dark'
     });
-
-    // Ambil Harga Live buat Ticker
-    async function fetchPrices() {
-      try {
-        const r = await fetch('https://api.jup.ag/price/v2?ids=So11111111111111111111111111111111111111112');
-        const d = await r.json();
-        const p = d.data['So11111111111111111111111111111111111111112'].price;
-        document.getElementById('ticker-sol').innerText = '$' + parseFloat(p).toFixed(2);
-      } catch (e) {}
-    }
-    setInterval(fetchPrices, 10000);
-    fetchPrices();
   </script>
 </body>
 </html>
