@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>$EXIT | Ave.ai Terminal</title>
   <script src="https://terminal.jup.ag/main.js"></script>
   <style>
@@ -14,6 +14,8 @@
       --text-dim: #848e9c;
       --green: #02c076;
       --red: #f84960;
+      --blur-bg: rgba(11,14,17,0.8);
+      --shadow-glow: 0 4px 20px rgba(2,192,118,0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,7 +29,19 @@
       overflow: hidden;
     }
 
-    /* Top Navigation ala Ave */
+    /* Efek glassmorphism & numpuk */
+    .panel {
+      background: var(--blur-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Top Nav compact */
     nav {
       height: 48px;
       background: var(--panel-bg);
@@ -36,56 +50,72 @@
       align-items: center;
       padding: 0 16px;
       justify-content: space-between;
+      backdrop-filter: blur(5px);
     }
-
-    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .nav-left { display: flex; align-items: center; gap: 16px; }
     .logo { font-weight: 800; font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 8px; }
     .logo img { height: 24px; border-radius: 50%; }
 
-    /* Layout Dashboard */
+    /* Dashboard grid padat */
     .dashboard {
       display: grid;
       grid-template-columns: 280px 1fr 320px;
       flex: 1;
-      gap: 1px; /* Garis pemisah tipis */
-      background: var(--border-color); /* Berfungsi sebagai border antar panel */
+      background: radial-gradient(circle at 50% 50%, rgba(2,192,118,0.05), transparent);
     }
 
-    .panel { background: var(--panel-bg); display: flex; flex-direction: column; overflow: hidden; }
-
-    /* Header Token Info (Tengah Atas) */
+    /* Token Header dengan glow */
     .token-header {
-      padding: 12px 16px;
-      background: var(--panel-bg);
+      padding: 8px 12px;
       display: flex;
-      gap: 24px;
+      gap: 16px;
       align-items: center;
       border-bottom: 1px solid var(--border-color);
+      position: relative;
     }
-
+    .token-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(2,192,118,0.1), transparent);
+      pointer-events: none;
+    }
     .price-big { font-size: 1.4rem; font-weight: bold; color: var(--green); }
     .stat-box { display: flex; flex-direction: column; }
-    .stat-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 4px; }
+    .stat-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 2px; }
     .stat-value { font-size: 0.85rem; font-weight: 500; }
 
-    /* Middle Section */
-    .main-content { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
-    .chart-area { flex: 1; min-height: 400px; }
-    .history-area { height: 250px; border-top: 1px solid var(--border-color); }
+    /* Main areas tight */
+    .main-content { flex: 1; overflow: hidden; }
+    .chart-area { flex: 1; min-height: 300px; }
+    .history-area { height: 200px; border-top: 1px solid var(--border-color); }
 
-    /* Sidebar Content */
-    .sidebar-content { padding: 12px; font-size: 0.8rem; }
-    .info-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
-    .ca-box { background: #1e2329; padding: 8px; border-radius: 4px; font-size: 0.7rem; word-break: break-all; margin: 10px 0; }
+    /* Sidebar compact */
+    .sidebar-content { padding: 8px; font-size: 0.8rem; }
+    .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .ca-box { background: #1e2329; padding: 6px; border-radius: 4px; font-size: 0.7rem; word-break: break-all; margin: 8px 0; }
 
-    /* Jupiter Terminal Styling */
-    #integrated-terminal { width: 100%; height: 100%; }
+    /* Buttons with hover depth */
+    .social-btn {
+      background: #1e2329;
+      color: white;
+      border: none;
+      padding: 6px;
+      flex: 1;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .social-btn:hover { transform: scale(1.05); box-shadow: 0 2px 10px rgba(255,255,255,0.1); }
 
+    /* Iframes full */
     iframe { width: 100%; height: 100%; border: none; }
 
+    /* Responsive stack padat */
     @media (max-width: 1100px) {
-      .dashboard { grid-template-columns: 1fr; overflow-y: auto; }
-      .panel { height: 500px; }
+      .dashboard { grid-template-columns: 1fr; height: auto; overflow-y: auto; gap: 0; }
+      .panel { min-height: 400px; border-bottom: none; }
+      .history-area { height: 300px; }
     }
   </style>
 </head>
@@ -103,19 +133,19 @@
 
   <div class="dashboard">
     <aside class="panel">
-      <div style="padding: 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">Token Info</div>
+      <div style="padding: 8px; font-weight: bold; border-bottom: 1px solid var(--border-color);">Token Info</div>
       <div class="sidebar-content">
         <div class="info-row"><span class="stat-label">Market Cap</span><span class="stat-value">$1,240,500</span></div>
         <div class="info-row"><span class="stat-label">Liquidity</span><span class="stat-value">$450,200</span></div>
         <div class="info-row"><span class="stat-label">Holders</span><span class="stat-value">8,420</span></div>
         <div class="info-row"><span class="stat-label">24h Vol</span><span class="stat-value">$89,400</span></div>
         
-        <div class="stat-label" style="margin-top:20px;">Contract Address (SOL)</div>
+        <div class="stat-label" style="margin-top:16px;">Contract Address (SOL)</div>
         <div class="ca-box">So11111111111111111111111111111111111111112</div>
         
-        <div style="margin-top:20px; display:flex; gap:10px;">
-          <button style="background:#1e2329; color:white; border:none; padding:8px; flex:1; border-radius:4px; cursor:pointer;">Twitter</button>
-          <button style="background:#1e2329; color:white; border:none; padding:8px; flex:1; border-radius:4px; cursor:pointer;">Telegram</button>
+        <div style="margin-top:16px; display:flex; gap:8px;">
+          <button class="social-btn">Twitter</button>
+          <button class="social-btn">Telegram</button>
         </div>
       </div>
     </aside>
@@ -139,13 +169,13 @@
       </div>
       
       <div class="history-area">
-        <iframe src="https://solscan.io/txs"></iframe>
+        <iframe src="https://solscan.io/token/So11111111111111111111111111111111111111112#transactions"></iframe>
       </div>
     </main>
 
     <aside class="panel">
-      <div style="padding: 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">Swap Terminal</div>
-      <div id="integrated-terminal"></div>
+      <div style="padding: 8px; font-weight: bold; border-bottom: 1px solid var(--border-color);">Swap Terminal</div>
+      <div id="integrated-terminal" style="flex:1;"></div>
     </aside>
   </div>
 
