@@ -1,194 +1,164 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>$EXIT | Ave.ai Terminal</title>
-  <script src="https://terminal.jup.ag/main.js"></script>
-  <style>
-    :root {
-      --bg-black: #000000;
-      --panel-bg: #0b0e11;
-      --border-color: #1e2329;
-      --text-main: #eaecef;
-      --text-dim: #848e9c;
-      --green: #02c076;
-      --red: #f84960;
-      --blur-bg: rgba(11,14,17,0.8);
-      --shadow-glow: 0 4px 20px rgba(2,192,118,0.1);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-black);
-      color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Efek glassmorphism & numpuk */
-    .panel {
-      background: var(--blur-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      position: relative;
-      box-shadow: var(--shadow-glow);
-    }
-
-    /* Top Nav compact */
-    nav {
-      height: 48px;
-      background: var(--panel-bg);
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      justify-content: space-between;
-      backdrop-filter: blur(5px);
-    }
-    .nav-left { display: flex; align-items: center; gap: 16px; }
-    .logo { font-weight: 800; font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 8px; }
-    .logo img { height: 24px; border-radius: 50%; }
-
-    /* Dashboard grid padat */
-    .dashboard {
-      display: grid;
-      grid-template-columns: 280px 1fr 320px;
-      flex: 1;
-      background: radial-gradient(circle at 50% 50%, rgba(2,192,118,0.05), transparent);
-    }
-
-    /* Token Header dengan glow */
-    .token-header {
-      padding: 8px 12px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      position: relative;
-    }
-    .token-header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 50%, rgba(2,192,118,0.1), transparent);
-      pointer-events: none;
-    }
-    .price-big { font-size: 1.4rem; font-weight: bold; color: var(--green); }
-    .stat-box { display: flex; flex-direction: column; }
-    .stat-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 2px; }
-    .stat-value { font-size: 0.85rem; font-weight: 500; }
-
-    /* Main areas tight */
-    .main-content { flex: 1; overflow: hidden; }
-    .chart-area { flex: 1; min-height: 300px; }
-    .history-area { height: 200px; border-top: 1px solid var(--border-color); }
-
-    /* Sidebar compact */
-    .sidebar-content { padding: 8px; font-size: 0.8rem; }
-    .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
-    .ca-box { background: #1e2329; padding: 6px; border-radius: 4px; font-size: 0.7rem; word-break: break-all; margin: 8px 0; }
-
-    /* Buttons with hover depth */
-    .social-btn {
-      background: #1e2329;
-      color: white;
-      border: none;
-      padding: 6px;
-      flex: 1;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .social-btn:hover { transform: scale(1.05); box-shadow: 0 2px 10px rgba(255,255,255,0.1); }
-
-    /* Iframes full */
-    iframe { width: 100%; height: 100%; border: none; }
-
-    /* Responsive stack padat */
-    @media (max-width: 1100px) {
-      .dashboard { grid-template-columns: 1fr; height: auto; overflow-y: auto; gap: 0; }
-      .panel { min-height: 400px; border-bottom: none; }
-      .history-area { height: 300px; }
-    }
-  </style>
-</head>
-<body>
-
-  <nav>
-    <div class="nav-left">
-      <div class="logo">
-        <img src="https://raw.githubusercontent.com/exitliquidity19-lab/Exitpro-/main/exit-coin.png" alt="logo">
-        EXIT PRO
-      </div>
-    </div>
-    <div id="jupiter-terminal-button"></div>
-  </nav>
-
-  <div class="dashboard">
-    <aside class="panel">
-      <div style="padding: 8px; font-weight: bold; border-bottom: 1px solid var(--border-color);">Token Info</div>
-      <div class="sidebar-content">
-        <div class="info-row"><span class="stat-label">Market Cap</span><span class="stat-value">$1,240,500</span></div>
-        <div class="info-row"><span class="stat-label">Liquidity</span><span class="stat-value">$450,200</span></div>
-        <div class="info-row"><span class="stat-label">Holders</span><span class="stat-value">8,420</span></div>
-        <div class="info-row"><span class="stat-label">24h Vol</span><span class="stat-value">$89,400</span></div>
-        
-        <div class="stat-label" style="margin-top:16px;">Contract Address (SOL)</div>
-        <div class="ca-box">So11111111111111111111111111111111111111112</div>
-        
-        <div style="margin-top:16px; display:flex; gap:8px;">
-          <button class="social-btn">Twitter</button>
-          <button class="social-btn">Telegram</button>
-        </div>
-      </div>
-    </aside>
-
-    <main class="panel main-content">
-      <div class="token-header">
-        <div class="stat-box">
-          <div class="price-big">$0.00004218</div>
-          <div style="font-size: 0.75rem; color: var(--green);">+12.45% (24h)</div>
-        </div>
-        <div class="stat-box">
-          <span class="stat-label">High</span><span class="stat-value">$0.00004500</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-label">Low</span><span class="stat-value">$0.00003820</span>
-        </div>
-      </div>
-      
-      <div class="chart-area">
-        <iframe src="https://birdeye.so/tv-widget/So11111111111111111111111111111111111111112?chain=solana&viewMode=pair&chartInterval=1m&theme=dark"></iframe>
-      </div>
-      
-      <div class="history-area">
-        <iframe src="https://solscan.io/token/So11111111111111111111111111111111111111112#transactions"></iframe>
-      </div>
-    </main>
-
-    <aside class="panel">
-      <div style="padding: 8px; font-weight: bold; border-bottom: 1px solid var(--border-color);">Swap Terminal</div>
-      <div id="integrated-terminal" style="flex:1;"></div>
-    </aside>
-  </div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>exitpro — Smart Solana Trading</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
-    window.Jupiter.init({
-      displayMode: "integrated",
-      integratedTargetId: "integrated-terminal",
-      endpoint: "https://api.mainnet-beta.solana.com",
-      referralAccount: "9HdCWUEgEajC47Hni4YvUFdoCzvncsMscXixMsmhNYmH",
-      referralFeeBps: 50,
-      theme: 'dark'
-    });
+    function toggleTheme() {
+      document.documentElement.classList.toggle("dark");
+    }
+
+    function showPage(page) {
+      document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+      document.getElementById(page).classList.remove("hidden");
+    }
   </script>
+</head>
+
+<body class="bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-white min-h-screen transition-colors">
+
+<!-- NAVBAR -->
+<header class="border-b border-zinc-200 dark:border-zinc-800">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+    <div class="text-xl font-semibold tracking-tight cursor-pointer" onclick="showPage('swap')">
+      exitpro
+    </div>
+
+    <nav class="flex items-center gap-4 text-sm">
+      <button onclick="showPage('swap')" class="hover:underline">Swap</button>
+      <button onclick="showPage('portfolio')" class="hover:underline">Portfolio</button>
+
+      <button onclick="toggleTheme()" class="px-2 py-1 rounded bg-zinc-200 dark:bg-zinc-800 text-xs">
+        ☀ / 🌙
+      </button>
+
+      <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium">
+        Connect Wallet
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= SWAP PAGE ================= -->
+<main id="swap" class="page max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+  <!-- SWAP CARD -->
+  <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+    <h2 class="text-lg font-semibold mb-6">Swap</h2>
+
+    <div class="space-y-5">
+      <div>
+        <label class="text-sm text-zinc-500">You pay</label>
+        <div class="flex items-center gap-2 mt-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-3">
+          <input class="flex-1 bg-transparent outline-none text-lg" placeholder="0.0" />
+          <span class="text-sm font-medium">SOL</span>
+        </div>
+      </div>
+
+      <div>
+        <label class="text-sm text-zinc-500">You receive</label>
+        <div class="flex items-center gap-2 mt-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-3 opacity-60">
+          <input disabled class="flex-1 bg-transparent outline-none text-lg" placeholder="0.0" />
+          <span class="text-sm font-medium">TOKEN</span>
+        </div>
+      </div>
+
+      <button class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold">
+        Swap
+      </button>
+
+      <p class="text-xs text-center text-zinc-500">
+        Aggregated liquidity by Jupiter · exitpro fee 0.25%
+      </p>
+    </div>
+  </div>
+
+  <!-- TRENDING -->
+  <div class="lg:col-span-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+    <h2 class="text-lg font-semibold mb-4">Trending Tokens</h2>
+
+    <div class="space-y-3">
+      <button onclick="showPage('token')" class="w-full text-left p-4 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700">
+        <div class="flex justify-between">
+          <div>
+            <div class="font-medium">JUP</div>
+            <div class="text-sm text-zinc-500">$0.84</div>
+          </div>
+          <div class="text-green-500 font-medium">+4.2%</div>
+        </div>
+      </button>
+
+      <div class="p-4 rounded-xl bg-zinc-100 dark:bg-zinc-800">
+        <div class="flex justify-between">
+          <div>
+            <div class="font-medium">BONK</div>
+            <div class="text-sm text-zinc-500">$0.000012</div>
+          </div>
+          <div class="text-red-500 font-medium">-1.8%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ================= TOKEN DETAIL ================= -->
+<main id="token" class="page hidden max-w-4xl mx-auto px-4 py-12 space-y-6">
+
+  <button onclick="showPage('swap')" class="text-sm text-zinc-500 hover:underline">
+    ← Back to Swap
+  </button>
+
+  <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-semibold">JUP</h1>
+        <p class="text-sm text-zinc-500">Jupiter Token</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xl font-semibold">$0.84</div>
+        <div class="text-green-500 text-sm">+4.2% (24h)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 h-64 flex items-center justify-center text-zinc-500">
+    Chart Placeholder (Dexscreener)
+  </div>
+
+  <button onclick="showPage('swap')" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold">
+    Swap Token
+  </button>
+</main>
+
+<!-- ================= PORTFOLIO ================= -->
+<main id="portfolio" class="page hidden max-w-4xl mx-auto px-4 py-12 space-y-6">
+
+  <h1 class="text-2xl font-semibold">Portfolio</h1>
+
+  <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6">
+    <div class="text-sm text-zinc-500">Total Value</div>
+    <div class="text-2xl font-semibold">$12,450.32</div>
+  </div>
+
+  <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl divide-y divide-zinc-200 dark:divide-zinc-800">
+    <div class="flex justify-between p-4">
+      <div>SOL</div>
+      <div>$410.12</div>
+    </div>
+    <div class="flex justify-between p-4">
+      <div>JUP</div>
+      <div>$1,008.00</div>
+    </div>
+    <div class="flex justify-between p-4">
+      <div>BONK</div>
+      <div>$96.00</div>
+    </div>
+  </div>
+</main>
+
 </body>
 </html>
 
